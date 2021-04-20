@@ -3,14 +3,18 @@ using System.Text.RegularExpressions;
 using ColorSupport.Internals;
 
 namespace ColorSupport {
+    ///<inheritdoc cref="ITerminalSupport"/>
     public class TerminalSupport: ITerminalSupport {
         private readonly IEnvironment _env;
         internal TerminalSupport (IEnvironment environment) {
             _env = environment;
         }
+        ///<inheritdoc cref="ITerminalSupport"/>
         public TerminalSupport () {
             _env = new Environment ();
         }
+
+        ///<inheritdoc cref="ITerminalSupport.Level"/>
         public SupportLevel Level => GetSupportLevel ();
 
         private SupportLevel GetSupportLevel () {
