@@ -2,7 +2,7 @@ using System;
 
 namespace ColorSupport.Internals
 {
-    public interface IEnvironment
+    internal interface IEnvironment
     {
         bool HasFlag(string flag);
         string GetEnvironmentVariable(string variable);
