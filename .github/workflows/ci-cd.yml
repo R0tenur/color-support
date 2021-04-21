@@ -29,4 +29,4 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/v')
       env:
         NUGET_API_KEY: ${{ secrets.NugetApiKey }}
-      run: cd nuget && dotnet nuget push "*.nupkg" --api-key "$NUGET_API_KEY"
+      run: cd nuget && dotnet nuget push "dist/*.nupkg" --api-key "$NUGET_API_KEY"
