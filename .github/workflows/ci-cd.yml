@@ -2,23 +2,21 @@ name: CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ '*' ]
   pull_request:
-    branches: [ main ]
+    branches: [ '*' ]
   create:
     tags:
       - v*
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 5.x.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -27,3 +25,8 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Pack
       run: dotnet pack ./src/ColorSupport/ColorSupport.csproj -c release -o ./dist
+    - name: push
+      if: startsWith(github.ref, 'refs/tags/v')
+      env:
+        NUGET_API_KEY: ${{ secrets.NugetApiKey }}
+      run: dotnet nuget push nuget/$(ls nuget) --api-key $NUGET_API_KEY
